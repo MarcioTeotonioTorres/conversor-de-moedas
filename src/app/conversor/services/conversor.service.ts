@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 // Importamos o HttpClient ao invés do Http para o Angular 7
 //import { Http } from '@angular/http';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http'; 
 import { Observable } from 'rxjs';
 import { Conversao, ConversaoResponse } from '../models';
 
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ConversorService {
   // Nova url do fixer.io, que adiciona o parâmetro access_key, que é a chave de autenticação 
   //private readonly BASE_URL = "http://api.fixer.io/latest";
@@ -34,8 +34,7 @@ export class ConversorService {
    * @param Conversao conversao
    * @return number
    */
-  cotacaoPara(conversaoResponse: ConversaoResponse, 
- conversao: Conversao): number {
+  cotacaoPara(conversaoResponse: ConversaoResponse, conversao: Conversao): number {
   if (conversaoResponse === undefined) {
   return 0;
   }
@@ -48,8 +47,7 @@ export class ConversorService {
    * @param Conversao conversao
    * @return string
    */
-  cotacaoDe(conversaoResponse: ConversaoResponse, 
- conversao: Conversao): string {
+  cotacaoDe(conversaoResponse: ConversaoResponse, conversao: Conversao): string {
   if (conversaoResponse === undefined) {
   return '0';
   }
@@ -68,6 +66,16 @@ export class ConversorService {
     }
     return conversaoResponse.date;
   }
+
+  retornaMoedaConvertida(conversaoResponse: ConversaoResponse, conversao: Conversao): string {
+    
+    let cotacao = conversaoResponse.rates[conversao.convertido];
+    let valorInput = parseFloat(conversao.valor.toString());
+    let valorConvertido = (cotacao * valorInput).toFixed(4);
+    
+    return valorConvertido;
+  }
+
 }
 //O HttpClient citado acima pertence a outro módulo no Angular 12, que deverá ser modificado também no arquivo 'app.module.ts', conforme código a seguir:
 

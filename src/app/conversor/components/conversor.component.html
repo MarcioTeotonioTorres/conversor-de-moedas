@@ -1,1 +1,66 @@
-<p>conversor works!</p>
+
+<br />
+<div class="alert alert-danger" 
+	role="alert"
+	*ngIf="possuiErro">
+	Erro obtendo dados. Tente novamente.
+</div>
+<div class="panel panel-success">
+	<div class="panel-heading">
+		Selecione a moeda a ser convertida
+	</div>
+	<div class="panel-body text-center">
+	  <form #conversaoForm="ngForm" class="form-control">
+		<div class="d-flex align-items-center gap-2">
+			<input 
+			  type="text" 
+			  name="valor"
+			  style="text-align: right;"
+			  class="form-control "
+			  placeholder="0" 
+			  [(ngModel)]="conversao.valor"
+			  numero
+			  required> Valor = {{ conversao.valor}}
+			<select 
+			  name="moedaDe"
+			  class="form-select"
+			  [(ngModel)]="conversao.converter"
+			  required>
+			  <option 
+				*ngFor="let moeda of moedas" 
+				[value]="moeda.sigla">
+				{{ moeda.sigla }} - {{ moeda.descricao }}
+			  </option>
+			</select>
+			<a class="" href="favicon.ico">
+				<img src="/public/favicon.ico">
+			  </a>
+			<select
+			  name="moedaPara"
+			  class="form-select"
+			  [(ngModel)]="conversao.convertido"
+			  required>
+			  <option 
+				*ngFor="let moeda of moedas" 
+				[value]="moeda.sigla">
+				{{ moeda.sigla }} - {{ moeda.descricao }}
+			  </option>
+			</select>
+		  </div>
+		<input 
+			type="submit" 
+			value="Converter"
+			class="btn btn-success"
+			data-toggle="modal" 
+			data-target="#modalCotacao"
+			(click)="converter()"
+			[disabled]="!conversaoForm.form.valid">
+		  <p></p>
+		<div class="alert alert-success"
+			role="alert">
+		  {{valorConvertido()}}
+		</div>
+	  </form>
+	 </div>
+	 
+</div>

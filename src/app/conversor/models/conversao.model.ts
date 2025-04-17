@@ -4,10 +4,10 @@ export class Conversao{
     public convertido: string; 
     public valor: number;
    
-    constructor(converter: string, convertido: string, valor: number) {
+    constructor(converter: string, convertido: string, valor: number |null) {
         this.converter = converter;
         this.convertido = convertido;
-        this.valor = valor;
+        this.valor = valor !== null ? valor : 0;
     }
       
 
